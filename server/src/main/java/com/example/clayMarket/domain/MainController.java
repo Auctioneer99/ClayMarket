@@ -1,4 +1,4 @@
-package com.example.demo.domain;
+package com.example.clayMarket.domain;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
