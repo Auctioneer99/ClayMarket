@@ -8,8 +8,8 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: keycloak_db
-    ports:
-      - "${DB_PORT}:${DB_PORT}"
+    #ports:
+    #  - ${DB_PORT}:${DB_PORT}"
     restart: unless-stopped
 
   keycloak:
@@ -25,21 +25,23 @@ services:
       KEYCLOAK_USER: ${KEYCLOAK_USER}
       KEYCLOAK_PASSWORD: ${KEYCLOAK_PASSWORD}
     ports:
-      - "${KEYCLOAK_PORT}:8080"
+      - ${8080:KEYCLOAK_PORT}
     depends_on:
       - postgres
 
   server:
     build: "."
     container_name: server
-    ports:
-      - "${SERVER_PORT}:8080"
     environment:
       DB_USER: ${POSTGRES_USER}
       DB_PASSWORD: ${POSTGRES_PASSWORD}
-      KEYCLOAK_USER: ${KEYCLOAK_USER}
-      KEYCLOAK_PASSWORD: ${KEYCLOAK_PASSWORD}
       DB_PORT: ${DB_PORT}
+      #KEYCLOAK_USER: ${KEYCLOAK_USER}
+      #KEYCLOAK_PASSWORD: ${KEYCLOAK_PASSWORD}
+      SERVER_PORT: ${SERVER_PORT}
+      KEYCLOAK_REALM_CERT_URL: ${KEYCLOAK_REALM_CERT_URL}
+    ports:
+      - ${8000:SERVER_PORT}
     depends_on:
       - keycloak
       - postgres
