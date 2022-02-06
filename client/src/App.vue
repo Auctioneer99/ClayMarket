@@ -71,6 +71,12 @@
   export default {
     name: "App",
     components: {},
+    props: {
+      keycloak: Object,
+    },
+    beforeMount() {
+      console.log(this.keycloak);
+    },
   };
 </script>
 

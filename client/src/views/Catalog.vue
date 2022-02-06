@@ -27,7 +27,7 @@
 </template>
 
 <script>
-  import service from "../domain/ServerService";
+  import service from "../domain/clayMarketService.js";
 
   export default {
     data() {

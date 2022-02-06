@@ -1,8 +1,9 @@
-import { createApp } from "vue";
+import { createApp, h } from "vue";
 import App from "./App.vue";
 import router from "./router.js";
+import keycloak from "./domain/keycloak";
 
-const app = createApp(App);
+const app = createApp(h(App, { props: { keycloak: keycloak } }));
 
 app.use(router);
 
