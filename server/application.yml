@@ -8,9 +8,9 @@ spring:
         jwt:
           jwk-set-uri: ${KEYCLOAK_REALM_CERT_URL:http://localhost:8080/auth/realms/master/protocol/openid-connect/certs}
   datasource:
-    url: jdbc:postgresql://localhost:${DB_PORT}/${DB_NAME}
-    username: ${DB_USER}
-    password: ${DB_PASSWORD}
+    url: jdbc:postgresql://localhost:${DB_PORT:5432}/${DB_NAME:claymarket}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:post123post}
   jpa:
     properties:
       hibernate:
