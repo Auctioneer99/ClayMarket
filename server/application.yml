@@ -7,3 +7,13 @@ spring:
       resourceserver:
         jwt:
           jwk-set-uri: ${KEYCLOAK_REALM_CERT_URL:http://localhost:8080/auth/realms/master/protocol/openid-connect/certs}
+  datasource:
+    url: jdbc:postgresql://localhost:${DB_PORT}/${DB_NAME}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL82Dialect
+        jdbc.lob.non_contextual_creation: true
+    hibernate.ddl-auto: update
