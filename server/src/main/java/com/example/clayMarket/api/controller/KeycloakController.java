@@ -1,4 +1,4 @@
-package com.example.clayMarket.api;
+package com.example.clayMarket.api.controller;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

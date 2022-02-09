@@ -11,7 +11,7 @@ public class BasketItemService {
 
     private final BasketItemRepository basketItemRepository;
 
-    public BasketItem getBasketItem(Long id) {
+    public BasketItem getItem(Long id) {
         return basketItemRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Not found: " + BasketItem.class));
     }
