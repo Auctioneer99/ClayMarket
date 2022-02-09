@@ -5,6 +5,7 @@ import com.nimbusds.jose.shaded.json.JSONObject;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -27,7 +28,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests(authorizeRequests -> authorizeRequests
-                        .antMatchers("/api/**").authenticated())
+                        .antMatchers(HttpMethod.GET, "/api/**").permitAll()
+                        .antMatchers(HttpMethod.POST, "/api/**").authenticated())
                 .oauth2ResourceServer(resourceServerConfigurer -> resourceServerConfigurer
                         .jwt(jwtConfigurer -> jwtConfigurer
                                 .jwtAuthenticationConverter(jwtAuthenticationConverter()))
