@@ -3,8 +3,10 @@ import App from "./App.vue";
 import router from "./router.js";
 import keycloak from "./domain/keycloak";
 
-const app = createApp(h(App, { props: { keycloak: keycloak } }));
+(async () => {
+  const app = createApp(h(App));
 
-app.use(router);
-
-app.mount("#app");
+  app.use(router);
+  await keycloak.init();
+  app.mount("#app");
+})();
