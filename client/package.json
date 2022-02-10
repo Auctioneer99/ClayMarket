@@ -4,12 +4,12 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --dest build",
+    "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "core-js": "^3.7.0",
-    "jquery": "^3.5.1",
+    "jquery": "^3.6.0",
     "js-sha256": "^0.9.0",
     "keycloak-js": "^16.1.1",
     "vue": "^3.2.29",
