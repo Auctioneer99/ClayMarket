@@ -11,6 +11,10 @@ public class BasketItemService {
 
     private final BasketItemRepository basketItemRepository;
 
+    public void save(BasketItem item) {
+        basketItemRepository.save(item);
+    }
+
     public void remove(BasketItem item) {
         basketItemRepository.delete(item);
     }
