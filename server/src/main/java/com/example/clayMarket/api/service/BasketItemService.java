@@ -11,6 +11,10 @@ public class BasketItemService {
 
     private final BasketItemRepository basketItemRepository;
 
+    public void remove(BasketItem item) {
+        basketItemRepository.delete(item);
+    }
+
     public BasketItem getItem(Long id) {
         return basketItemRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Not found: " + BasketItem.class));

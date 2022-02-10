@@ -21,6 +21,13 @@ public class BasketController {
         return basketService.addItem(id);
     }
 
+    @DeleteMapping("/id")
+    public Boolean removeItem(
+            @PathVariable Long id
+    ) {
+        return basketService.removeItem(id);
+    }
+
     @GetMapping
     public BasketView getBasket() {
         return BasketMapper.INSTANCE.toBasketView(basketService.getBasketForUser());

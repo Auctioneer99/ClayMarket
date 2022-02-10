@@ -25,17 +25,38 @@ public class BasketService {
             Long id
     ) {
         var clay = clayService.getItem(id);
-        var userId = authService.getCurrentUserId();
+        var basket = getBasketForUser();
 
-        var predicate = QBasket.basket.userId.eq(userId).and(QBasket.basket.ordered.eq(false));
-        var basketOptional = basketRepository.findOne(predicate);
-        var basket = persistBasket(basketOptional);
-
+        for (var item: basket.getBasketItems()) {
+            if (item.getClay().getId().equals(id)) {
+                item.setCount(item.getCount() + 1);
+                return true;
+            }
+        }
         var basketItem = new BasketItem();
         basketItem.setBasket(basket);
         basketItem.setClay(clay);
+        basketItem.setCount(1L);
 
         return true;
+    }
+
+    public Boolean removeItem(
+            Long id
+    ) {
+        var basket = getBasketForUser();
+
+        for (var item: basket.getBasketItems()) {
+            if (item.getClay().getId().equals(id)) {
+                item.setCount(item.getCount() - 1);
+                if (item.getCount().equals((0L))) {
+                    basketItemService.remove(item);
+                }
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public Basket getBasketForUser() {
@@ -65,5 +86,4 @@ public class BasketService {
         return basketRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Not found: " + Basket.class));
     }
-
 }
