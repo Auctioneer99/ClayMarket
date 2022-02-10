@@ -1,24 +1,40 @@
 <template>
-  <font face="Arial" size="+2"> <i>Каталог</i> </font><br />
+  Каталог<br />
   <table border="0" width="100%">
     <tr>
       <td width="50%">
-        <center>
-          <h3>Издатели</h3>
-        </center>
+        <h3>Издатели</h3>
         <ul>
-          <li v-for="publisher in publishers" :key="publisher.id">
-            <a>{{ publisher }}</a>
+          <li v-for="supplier in suppliers" :key="supplier.id">
+            <router-link
+              :to="{
+                name: 'showcase',
+                params: { type: 'supplier', id: supplier.id },
+                query: { type: 'supplier', id: supplier.id },
+              }"
+            >
+              {{ supplier.name }}
+              <br />
+              {{ supplier.description }}
+            </router-link>
           </li>
         </ul>
       </td>
       <td width="50%">
-        <center>
-          <h3>Категории</h3>
-        </center>
+        <h3>Категории</h3>
         <ul>
           <li v-for="category in categories" :key="category.id">
-            <a>{{ category }}</a>
+            <router-link
+              :to="{
+                name: 'showcase',
+                params: { type: 'category', id: category.id },
+                query: { type: 'category', id: category.id },
+              }"
+            >
+              {{ category.name }}
+              <br />
+              {{ category.description }}
+            </router-link>
           </li>
         </ul>
       </td>
@@ -33,12 +49,12 @@
     data() {
       return {
         categories: [],
-        publishers: [],
+        suppliers: [],
       };
     },
     async beforeCreate() {
       this.categories = await service.getCategories();
-      this.publishers = await service.getPublishers();
+      this.suppliers = await service.getSuppliers();
     },
   };
 </script>
