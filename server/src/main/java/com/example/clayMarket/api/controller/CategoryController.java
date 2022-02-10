@@ -4,6 +4,7 @@ import com.example.clayMarket.api.mapper.CategoryMapper;
 import com.example.clayMarket.api.service.CategoryService;
 import com.example.clayMarket.api.view.CategoryView;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/category")
 @CrossOrigin
+@Transactional
 @RequiredArgsConstructor
 public class CategoryController {
 
