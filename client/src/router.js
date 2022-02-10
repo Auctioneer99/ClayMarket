@@ -11,6 +11,22 @@ var routes = [
     name: "catalog",
     component: () => import("./views/Catalog.vue"),
   },
+  {
+    path: "/showcase",
+    name: "showcase",
+    component: () => import("./views/Showcase.vue"),
+    props: (route) => ({ id: route.query.id, type: route.query.type }),
+  },
+  {
+    path: "/basket",
+    name: "basket",
+    component: () => import("./views/Basket.vue"),
+  },
+  {
+    path: "/orders",
+    name: "orders",
+    component: () => import("./views/Orders.vue"),
+  },
 ];
 
 const router = createRouter({
