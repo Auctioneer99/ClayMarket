@@ -29,6 +29,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests(authorizeRequests -> authorizeRequests
                         .antMatchers(HttpMethod.GET, "/api/**").permitAll()
+                        .antMatchers(HttpMethod.GET, "/api/basket/**").authenticated()
+                        .antMatchers(HttpMethod.DELETE, "/api/basket/**").authenticated()
                         .antMatchers(HttpMethod.POST, "/api/**").authenticated())
                 .oauth2ResourceServer(resourceServerConfigurer -> resourceServerConfigurer
                         .jwt(jwtConfigurer -> jwtConfigurer
