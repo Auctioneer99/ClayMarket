@@ -22,6 +22,9 @@ public class Clay {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "price")
+    private Double price;
+
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;

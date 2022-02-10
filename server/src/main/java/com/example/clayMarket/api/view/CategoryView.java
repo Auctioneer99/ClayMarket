@@ -9,5 +9,7 @@ public class CategoryView {
 
     private Long id;
 
+    private String name;
+
     private String description;
 }
