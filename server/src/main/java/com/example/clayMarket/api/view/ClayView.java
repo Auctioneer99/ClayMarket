@@ -17,6 +17,10 @@ public class ClayView {
 
     private Double price;
 
+    private Double weight;
+
+    private String image;
+
     private CategoryView category;
 
     private List<SupplierView> suppliers;

@@ -25,6 +25,12 @@ public class Clay {
     @Column(name = "price")
     private Double price;
 
+    @Column(name = "weight")
+    private Double weight;
+
+    @Column(name = "imageUrl")
+    private String image;
+
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
