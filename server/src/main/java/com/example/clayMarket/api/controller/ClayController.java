@@ -1,12 +1,12 @@
 package com.example.clayMarket.api.controller;
 
-import com.example.clayMarket.api.entity.Clay;
 import com.example.clayMarket.api.mapper.ClayMapper;
 import com.example.clayMarket.api.service.CategoryService;
 import com.example.clayMarket.api.service.ClayService;
 import com.example.clayMarket.api.service.SupplierService;
 import com.example.clayMarket.api.view.ClayView;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,6 +15,7 @@ import java.util.List;
 @CrossOrigin
 @RequestMapping("/api/clay")
 @RequiredArgsConstructor
+@Transactional
 public class ClayController {
 
     private final ClayService clayService;
