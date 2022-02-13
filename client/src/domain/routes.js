@@ -1,4 +1,6 @@
+var host = "http://localhost:8000";
+//var clientHost = "http://localhost:3000";
 export default {
-  host: "http://localhost:8000",
-  hostApi: this.host + "/api",
+  host: host,
+  hostApi: host + "/api",
 };

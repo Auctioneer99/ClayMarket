@@ -15,9 +15,9 @@ export default {
       url: hostApi + "/supplier",
     });
   },
-  getItems: (type, id) => {
+  getItems: (type, id, page, recordsCount) => {
     return $.ajax({
-      url: hostApi + `/clay/${type}/${id}`,
+      url: hostApi + `/clay/${type}/${id}?page=${page}&size=${recordsCount}`,
     });
   },
   getBasket: () => {
