@@ -6,10 +6,10 @@ import com.example.clayMarket.api.service.ClayService;
 import com.example.clayMarket.api.service.SupplierService;
 import com.example.clayMarket.api.view.ClayView;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -22,19 +22,31 @@ public class ClayController {
     private final CategoryService categoryService;
     private final SupplierService supplierService;
 
+    @GetMapping
+    public Page<ClayView> read(
+            @RequestParam("page") int pageIndex,
+            @RequestParam("size") int pageSize
+    ) {
+        return clayService.read(PageRequest.of(pageIndex, pageSize)).map(ClayMapper.INSTANCE::toClayView);
+    }
+
     @GetMapping("/category/{categoryId}")
-    public List<ClayView> readByCategory(
-            @PathVariable Long categoryId
+    public Page<ClayView> readByCategory(
+            @PathVariable Long categoryId,
+            @RequestParam("page") int pageIndex,
+            @RequestParam("size") int pageSize
     ) {
         var category = categoryService.getItem(categoryId);
-        return clayService.read(category).stream().map(ClayMapper.INSTANCE::toClayView).toList();
+        return clayService.read(category, PageRequest.of(pageIndex, pageSize)).map(ClayMapper.INSTANCE::toClayView);
     }
 
     @GetMapping("/supplier/{supplierId}")
-    public List<ClayView> readBySupplier(
-            @PathVariable Long supplierId
+    public Page<ClayView> readBySupplier(
+            @PathVariable Long supplierId,
+            @RequestParam("page") int pageIndex,
+            @RequestParam("size") int pageSize
     ) {
         var supplier = supplierService.getItem(supplierId);
-        return clayService.read(supplier).stream().map(ClayMapper.INSTANCE::toClayView).toList();
+        return clayService.read(supplier, PageRequest.of(pageIndex, pageSize)).map(ClayMapper.INSTANCE::toClayView);
     }
 }

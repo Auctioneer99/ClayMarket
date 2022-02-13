@@ -6,11 +6,9 @@ import com.example.clayMarket.api.entity.QClay;
 import com.example.clayMarket.api.entity.Supplier;
 import com.example.clayMarket.api.repository.ClayRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Service
 @RequiredArgsConstructor
@@ -18,16 +16,18 @@ public class ClayService {
 
     private final ClayRepository clayRepository;
 
-    public List<Clay> read(Category category) {
+    public Page<Clay> read(Category category, Pageable pageable) {
         var pred = QClay.clay.category.eq(category);
-        return StreamSupport.stream(clayRepository.findAll(pred).spliterator(), false)
-                .collect(Collectors.toList());
+        return clayRepository.findAll(pred, pageable);
     }
 
-    public List<Clay> read(Supplier supplier) {
+    public Page<Clay> read(Supplier supplier, Pageable pageable) {
         var pred = QClay.clay.suppliers.any().eq(supplier);
-        return StreamSupport.stream(clayRepository.findAll(pred).spliterator(), false)
-                .collect(Collectors.toList());
+        return clayRepository.findAll(pred, pageable);
+    }
+
+    public Page<Clay> read(Pageable pageable) {
+        return clayRepository.findAll(pageable);
     }
 
     public Clay getItem(Long id) {
