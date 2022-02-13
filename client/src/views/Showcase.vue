@@ -1,6 +1,7 @@
 <template>
+  <Loader :loading="showLoader" />
   <table border="1" width="100%" align="right">
-    <tr v-for="item in items" :key="item.id">
+    <tr v-for="item in listItems" :key="item.id">
       <td align="center">
         <img
           width="200"
@@ -41,26 +42,72 @@
       </td>
     </tr>
   </table>
+  <Pagination
+    v-if="listItems"
+    :total-pages="totalPages"
+    :per-page="recordsPerPage"
+    :current-page="page"
+    @pagechanged="onPageChange"
+  />
 </template>
 
 <script>
   import service from "../domain/clayMarketService.js";
   import keycloak from "../domain/keycloak.js";
+  import Pagination from "../components/Pagination";
+  import Loader from "../components/Loader";
 
   export default {
+    components: {
+      Pagination,
+      Loader,
+    },
     data() {
       return {
-        items: [],
+        showLoader: false,
+        listItems: [],
+        page: 0,
+        totalPages: 0,
+        totalRecords: 0,
+        recordsPerPage: 10,
+        enterpageno: "",
       };
     },
     props: ["type", "id"],
-    async beforeMount() {
-      this.items = await service.getItems(this.type, this.id);
+    beforeMount() {
+      this.loadListItem();
     },
     methods: {
       addToBasket: function (id) {
         keycloak.login(this.$router.currentRoute.value.fullPath);
         service.addToBasket(id);
+      },
+      async loadListItem() {
+        this.showLoader = true;
+        var response = await service.getItems(
+          this.type,
+          this.id,
+          this.page,
+          this.recordsPerPage
+        );
+        console.log(response);
+        this.showLoader = false;
+        this.listItems = response.content;
+        this.totalPages = response.totalPages;
+        this.totalRecords = response.totalElements;
+      },
+      onPageChange(page) {
+        this.page = page;
+        this.loadListItem();
+      },
+      onChangeRecordsPerPage() {
+        this.loadListItem();
+      },
+      gotoPage() {
+        if (!isNaN(parseInt(this.enterpageno))) {
+          this.page = parseInt(this.enterpageno);
+          this.loadListItem();
+        }
       },
     },
   };
