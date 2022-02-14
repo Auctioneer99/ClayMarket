@@ -68,4 +68,19 @@ export default {
       contentType: "application/json; charset=utf-8",
     });
   },
+  getSuppliersByClay: () => {
+    return $.ajax({
+      url: hostApi + "/statistics/supplier",
+    });
+  },
+  getClayByPrice: () => {
+    return $.ajax({
+      url: hostApi + "/statistics/clayPrice",
+    });
+  },
+  getClayByOrder: () => {
+    return $.ajax({
+      url: hostApi + "/statistics/clayOrder",
+    });
+  },
 };

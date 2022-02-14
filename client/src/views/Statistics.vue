@@ -1,10 +1,41 @@
 <template>
   <table border="1" width="100%" align="right">
     <tr>
-      <td align="center"></td>
-
+      <td align="center" width="30%">Топ поставщиков по количеству товаров</td>
       <td>
-        <li></li>
+        <li v-for="sup in suppliersByClay" :key="sup.id">
+          <router-link
+            :to="{
+              name: 'showcase',
+              params: { type: 'supplier', id: sup.id },
+              query: { type: 'supplier', id: sup.id },
+            }"
+          >
+            {{ sup.name }}
+            <br />
+            {{ sup.count }}
+          </router-link>
+        </li>
+      </td>
+    </tr>
+    <tr>
+      <td align="center">Топ товаров по цене</td>
+      <td>
+        <li v-for="clay in clayByPrice" :key="clay.id">
+          {{ clay.name }}
+          <br />
+          {{ clay.price }}
+        </li>
+      </td>
+    </tr>
+    <tr>
+      <td align="center">Топ покупаемых товаров</td>
+      <td>
+        <li v-for="clay in clayByOrder" :key="clay.id">
+          {{ clay.name }}
+          <br />
+          {{ clay.count }}
+        </li>
       </td>
     </tr>
   </table>
@@ -15,25 +46,20 @@
 
   export default {
     data() {
-      return {};
+      return {
+        suppliersByClay: [],
+        clayByPrice: [],
+        clayByOrder: [],
+      };
     },
     beforeMount() {
       this.loadListItem();
     },
     methods: {
       async loadListItem() {
-        this.showLoader = true;
-        var response = await service.getItems(
-          this.type,
-          this.id,
-          this.page,
-          this.recordsPerPage
-        );
-        console.log(response);
-        this.showLoader = false;
-        this.listItems = response.content;
-        this.totalPages = response.totalPages;
-        this.totalRecords = response.totalElements;
+        this.suppliersByClay = await service.getSuppliersByClay();
+        this.clayByPrice = await service.getClayByPrice();
+        this.clayByOrder = await service.getClayByOrder();
       },
     },
   };
