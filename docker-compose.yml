@@ -3,8 +3,10 @@ version: "3.8"
 services:
   postgres:
     image: postgres:latest
-    hostname: postgres
+    hostname: ${POSTGRES_URL}
     container_name: postgres
+    volumes:
+      - f4fe7d245b55ef91cb090684cbb63a84313c5a592bb11371145e9a1e766202cb:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -16,17 +18,18 @@ services:
   postgres_client:
     image: dpage/pgadmin4
     container_name: pgAdmin
+    volumes:
+      - dac94c534b41a608845d89ecb23b534e9dd637a6fe68bfd165219813630d1068:/var/lib/pgadmin
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PG_ADMIN_EMAIL}
       PGADMIN_DEFAULT_PASSWORD: ${POSTGRES_PASSWORD}
       PGADMIN_LISTEN_PORT: ${PG_ADMIN_PORT}
     ports:
       - ${PG_ADMIN_PORT}:${PG_ADMIN_PORT}
-    depends_on:
-      - postgres
 
   keycloak:
     image: jboss/keycloak
+    hostname: ${KEYCLOAK_URL}
     container_name: keycloak
     environment:
       DB_VENDOR: POSTGRES
@@ -35,8 +38,8 @@ services:
       DB_PORT: ${DB_PORT}
       DB_USER: ${POSTGRES_USER}
       DB_PASSWORD: ${POSTGRES_PASSWORD}
-      KEYCLOAK_USER: ${KEYCLOAK_USER}
-      KEYCLOAK_PASSWORD: ${KEYCLOAK_PASSWORD}
+      #KEYCLOAK_USER: ${KEYCLOAK_USER}
+      #KEYCLOAK_PASSWORD: ${KEYCLOAK_PASSWORD}
     ports:
       - ${KEYCLOAK_PORT}:${KEYCLOAK_PORT}
     depends_on:
@@ -46,12 +49,18 @@ services:
     build: "."
     container_name: server
     environment:
+      #Client
+      VUE_APP_KEYCLOAK_HOST: ${KEYCLOAK_URL}
+      VUE_APP_KEYCLOAK_PORT: ${KEYCLOAK_PORT}
+      VUE_APP_KEYCLOAK_REALM: ${KEYCLOAK_REALM}
+      VUE_APP_KEYCLOAK_CLIENT: ${KEYCLOAK_CLIENT}
+      VUE_APP_SERVER_PORT: ${SERVER_PORT}
+
+      #Server
       DB_USER: ${POSTGRES_USER}
       DB_PASSWORD: ${POSTGRES_PASSWORD}
-      DB_PORT: ${DB_PORT}
-      DB_NAME: ${SERVER_DB}
-      #KEYCLOAK_USER: ${KEYCLOAK_USER}
-      #KEYCLOAK_PASSWORD: ${KEYCLOAK_PASSWORD}
+      DB_URL: ${DB_URL}
+
       SERVER_PORT: ${SERVER_PORT}
       KEYCLOAK_REALM_CERT_URL: ${KEYCLOAK_REALM_CERT_URL}
     ports:
@@ -59,4 +68,9 @@ services:
     depends_on:
       - keycloak
       - postgres
+volumes:
+  f4fe7d245b55ef91cb090684cbb63a84313c5a592bb11371145e9a1e766202cb:
+    external: true
+  dac94c534b41a608845d89ecb23b534e9dd637a6fe68bfd165219813630d1068:
+    external: true
     
