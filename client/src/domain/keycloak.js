@@ -1,12 +1,14 @@
 import Keycloak from "keycloak-js";
 import routes from "./routes";
 
-var { host } = routes;
+var { self } = routes;
 
 let initOptions = {
-  url: `http://localhost:${process.env.KEYCLOAK_PORT ?? 8080}/auth`,
-  realm: process.env.KEYCLOAK_REALM ?? "master",
-  clientId: process.env.KEYCLOAK_VUE_CLIENT ?? "client",
+  url: `http://${process.env.VUE_APP_KEYCLOAK_HOST ?? "localhost"}:${
+    process.env.VUE_APP_KEYCLOAK_PORT ?? 8080
+  }/auth`,
+  realm: process.env.VUE_APP_KEYCLOAK_REALM ?? "master",
+  clientId: process.env.VUE_APP_KEYCLOAK_CLIENT ?? "client",
   //onLoad: "check-sso", //"login-required",
 };
 
@@ -21,7 +23,7 @@ export default {
   },
   login(url) {
     if (keycloak.authenticated == false) {
-      return keycloak.login({ redirectUri: host + url });
+      return keycloak.login({ redirectUri: self + url });
     }
     this.updateToken();
   },
