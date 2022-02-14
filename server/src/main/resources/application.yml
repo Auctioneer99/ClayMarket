@@ -8,7 +8,8 @@ spring:
         jwt:
           jwk-set-uri: ${KEYCLOAK_REALM_CERT_URL:http://localhost:8080/auth/realms/master/protocol/openid-connect/certs}
   datasource:
-    url: jdbc:postgresql://localhost:${DB_PORT:5432}/${DB_NAME:claymarket}
+    driverClassName: org.postgresql.Driver
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/claymarket}
     username: ${DB_USER:postgres}
     password: ${DB_PASSWORD:post123post}
   jpa:
@@ -16,7 +17,8 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQL82Dialect
         jdbc.lob.non_contextual_creation: true
-    hibernate.ddl-auto: update
+    hibernate:
+      ddl-auto: update
 logging.level.org.hibernate:
   SQL: DEBUG
   BasicBinder: TRACE
