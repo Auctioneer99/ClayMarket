@@ -5,6 +5,7 @@ import com.example.clayMarket.api.entity.Clay;
 import com.example.clayMarket.api.entity.QClay;
 import com.example.clayMarket.api.entity.Supplier;
 import com.example.clayMarket.api.repository.ClayRepository;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,6 +29,10 @@ public class ClayService {
 
     public Page<Clay> read(Pageable pageable) {
         return clayRepository.findAll(pageable);
+    }
+
+    public Page<Clay> read(BooleanExpression pred, Pageable pageable) {
+        return clayRepository.findAll(pred, pageable);
     }
 
     public Clay getItem(Long id) {

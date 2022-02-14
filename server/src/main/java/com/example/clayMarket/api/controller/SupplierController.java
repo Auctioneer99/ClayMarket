@@ -23,6 +23,6 @@ public class SupplierController {
 
     @GetMapping
     public List<SupplierView> read() {
-        return publisherService.read().stream().map(SupplierMapper.INSTANCE::toSupplierView).toList();
+        return publisherService.readAll().stream().map(SupplierMapper.INSTANCE::toSupplierView).toList();
     }
 }
