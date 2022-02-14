@@ -12,6 +12,7 @@ import com.example.clayMarket.api.view.SupplierFetchCountView;
 import com.querydsl.jpa.impl.JPAQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,13 +24,14 @@ import java.util.List;
 @RequestMapping("/api/statistics")
 @CrossOrigin
 @RequiredArgsConstructor
+@Transactional
 public class StatisticsController {
 
     private final SupplierService supplierService;
     private final ClayService clayService;
 
     @GetMapping("/supplier")
-    public List<SupplierFetchCountView> getToSuppliersByClay() {
+    public List<SupplierFetchCountView> getSuppliersByClay() {
         JPAQuery<Long> query = new JPAQuery<Long>()
                 .select(QSupplier.supplier.id)
                 .from(QSupplier.supplier)

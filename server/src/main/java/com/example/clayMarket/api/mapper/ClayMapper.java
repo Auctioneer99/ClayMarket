@@ -7,6 +7,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
+
 @Mapper
 public interface ClayMapper {
 
@@ -14,6 +15,6 @@ public interface ClayMapper {
 
     ClayView toClayView(Clay clay);
 
-    @Mapping(target = "count", expression = "java(clay.getBasketItems().stream().count())")
+    @Mapping(target = "count", expression = "java(clay.getBasketItems().stream().mapToLong(entity -> entity.getCount()).sum())")
     ClayFetchOrderCountView toClayFetchOrderCountView(Clay clay);
 }
