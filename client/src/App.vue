@@ -22,6 +22,9 @@
         <td align="center" bgcolor="#ffaaff">
           <router-link to="/orders"><b>Заказ</b></router-link>
         </td>
+        <td align="center" bgcolor="#ffaaff">
+          <router-link to="/statistics"><b>Статистика</b></router-link>
+        </td>
         <td align="center" bgcolor="#aaaaff">
           <a href="#"><b v-on:click="login">Войти</b></a>
         </td>
